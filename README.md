@@ -7,10 +7,10 @@
 **Licença**: [The Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)  
 **Versão Corrente**: 1.0
 
-Sobre o showcase
+Sobre o Showcase
 -----
 
-Projeto web para demonstração do componente [leaflet-primefaces-extension]()
+Projeto web para demonstração do componente [leaflet-primefaces-extension](https://github.com/edernilson/leaflet-primefaces-extension)
 
 
 Compatibilidade:
