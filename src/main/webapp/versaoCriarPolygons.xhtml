@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/Layout.xhtml"
+                xmlns:e="http://edernilson.com/componentes/ui">
+
+    <ui:define name="content">
+        <h:head>
+        </h:head>
+        <h:body>
+            <h1>Criação de Polígonos</h1>
+            <h:form>
+                <e:leaflet center="36.890257,30.707417" zoom="12" type="ROADMAP"  
+                           style="width:100%;height:400px"
+                           model="#{polygonsView.polygonModel}"/>
+            </h:form>
+            
+            <br/>
+
+            <p:tabView>
+                <p:tab title="versaoCriarPolygons.xhtml">
+                    <pre>
+&lt;h:body&gt;
+    &lt;h1&gt;Criação de Polígonos&lt;/h1&gt;
+    &lt;h:form&gt;
+        &lt;e:leaflet center="36.890257,30.707417" zoom="12" type="ROADMAP" 
+                   style="width:100%;height:400px"
+                   model="\#{polygonsView.polygonModel}"/&gt;
+    &lt;/h:form&gt;
+&lt;/h:body&gt; 
+                    </pre>
+                </p:tab>
+                <p:tab title="PolygonsView">
+                    <pre>
+@ManagedBean
+public class PolygonsView implements Serializable {
+  
+    private MapModel polygonModel;
+      
+    @PostConstruct
+    public void init() {
+        polygonModel = new DefaultMapModel();
+          
+        LatLng coord1 = new LatLng(36.879466, 30.667648);
+        LatLng coord2 = new LatLng(36.883707, 30.689216);
+        LatLng coord3 = new LatLng(36.879703, 30.706707);
+  
+        //Polygon
+        Polygon polygon = new Polygon();
+        polygon.getPaths().add(coord1);
+        polygon.getPaths().add(coord2);
+        polygon.getPaths().add(coord3);
+  
+        polygon.setStrokeColor("#FF0000");
+        polygon.setFillColor("#FF9900");
+        polygon.setStrokeOpacity(0.7);
+        polygon.setFillOpacity(0.7);
+          
+        polygonModel.addOverlay(polygon);
+    }
+  
+    public MapModel getPolygonModel() {
+        return polygonModel;
+    }
+ 
+}
+                    </pre>                    
+                </p:tab>
+            </p:tabView>
+            <br/>
+        </h:body>
+    </ui:define>
+
+</ui:composition>

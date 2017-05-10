@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/Layout.xhtml"
+                xmlns:e="http://edernilson.com/componentes/ui">
+
+    <ui:define name="content">
+        <h:head>
+        </h:head>
+        <h:body>
+            <h1>Criação de Eventos</h1>
+            <h2>StateChange e PointSelect</h2>
+            <h:form>
+                <p:growl id="messages" showDetail="true" life="2000" />
+
+                <e:leaflet center="-3.7, -38.5" zoom="12" type="ROADMAP"  
+                           style="width:100%;height:400px">
+                    <p:ajax event="stateChange" listener="#{eventView.onStateChange}" update="messages" />
+                    <p:ajax event="pointSelect" listener="#{eventView.onPointSelect}" update="messages" />
+                </e:leaflet>
+            </h:form>
+
+            <br/>
+
+            <p:tabView>
+                <p:tab title="versaoCriarEventos.xhtml">
+                    <pre>
+&lt;h:body&gt;
+    &lt;h1&gt;Criação de Eventos&lt;/h1&gt;
+    &lt;h2&gt;StateChange e PointSelect&lt;/h2&gt;
+    &lt;h:form&gt;
+
+        &lt;p:growl id="messages" showDetail="true" life="2000" /&gt;
+
+        &lt;e:leaflet center="-3.7, -38.5" zoom="12" type="ROADMAP" 
+                   style="width:600px;height:400px"&gt;
+                    &lt;p:ajax event="stateChange" listener="\#{eventView.onStateChange}" update="messages" /&gt;
+                    &lt;p:ajax event="pointSelect" listener="\#{eventView.onPointSelect}" update="messages" /&gt;
+        &lt;/e:leaflet&gt;
+    &lt;/h:form&gt;
+&lt;/h:body&gt; 
+                    </pre>
+                </p:tab>
+                <p:tab title="EventView">
+                    <pre>
+
+@ManagedBean
+public class EventView implements Serializable {
+     
+    public void onStateChange(StateChangeEvent event) {
+        LatLngBounds bounds = event.getBounds();
+        int zoomLevel = event.getZoomLevel();
+          
+        addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Zoom Level", String.valueOf(zoomLevel)));
+        addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Center", event.getCenter().toString()));
+        addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "NorthEast", bounds.getNorthEast().toString()));
+        addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "SouthWest", bounds.getSouthWest().toString()));
+    }
+      
+    public void onPointSelect(PointSelectEvent event) {
+        LatLng latlng = event.getLatLng();
+          
+        addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Point Selected", "Lat:" + latlng.getLat() + ", Lng:" + latlng.getLng()));
+    }
+      
+    public void addMessage(FacesMessage message) {
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+}
+                    </pre>                    
+                </p:tab>
+            </p:tabView>
+            <br/>
+        </h:body>
+    </ui:define>
+
+</ui:composition>
