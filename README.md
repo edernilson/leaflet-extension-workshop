@@ -19,7 +19,7 @@ Compatibilidade:
 O projeto *leaflet-extension-workshop* foi escrito e testado com **PrimeFaces 3.5** e **JSF 2.2**.
 
 
-Compatibilidade:
+Informações Adicionais:
 ----------------------
 
 O layout da aplicação foi copiado do projeto [layout-bootstrap-atacama](https://github.com/algaworks/layout-primefaces-patagonia) da Algaworks.
